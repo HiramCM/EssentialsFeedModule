@@ -32,7 +32,12 @@ public final class RemoteFeedLoader {
     }
     
     public func load(completion: @escaping (Error) -> Void) {
+        // 1 - calling the client get method simulating a httpRequest
+        // waiting for the client completion handler to validate result response
         client.get(from: url) { result in
+            // 4 - after execute the captured complition handler in HTTPClientSpy
+            // the completion handler return to main caller (load) and get the result
+            // failure or success and then executes main completion handler
             switch result {
             case .success:
                 completion(.invalidData)

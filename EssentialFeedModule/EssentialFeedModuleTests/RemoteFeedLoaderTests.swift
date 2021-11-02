@@ -39,7 +39,11 @@ class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         
         var capturedError = [RemoteFeedLoader.Error]()
-        sut.load { capturedError.append($0) }
+        sut.load {
+            // 4.1 - after execute the completion handler in load method from RemoteFeedLoader
+            // we return the result to be saved and then validated
+            capturedError.append($0)
+        }
         
         let clientError = NSError(domain: "Test", code: 0, userInfo: nil)
         client.complete(with: clientError)
@@ -56,7 +60,11 @@ class RemoteFeedLoaderTests: XCTestCase {
             index, code in
             
             var capturedErrors = [RemoteFeedLoader.Error]()
-            sut.load { capturedErrors.append($0) }
+            sut.load {
+                // 4.1 - after execute the completion handler in load method from RemoteFeedLoader
+                // we return the result to be saved and then validated
+                capturedErrors.append($0)
+            }
             
             client.complete(withStatusCode: code, at: index)
             
@@ -82,14 +90,20 @@ class RemoteFeedLoaderTests: XCTestCase {
         }
         
         func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
+            // 2 - capturing the completion habdler.
+            // won't execute because it's captured in a array of closures to excute it later
             messages.append((url, completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
+            // 3 - executing previous captured completion handler
+            // and return it to the main caller (RemoteFeedLoader - load)
             messages[index].completion(.failure(error))
         }
         
         func complete(withStatusCode code: Int, at index: Int = 0) {
+            // 3.1 - executing previous captured completion handler
+            // and return it to the main caller (RemoteFeedLoader - load)
             let response = HTTPURLResponse(url: requestedURls[index],
                                            statusCode: 400,
                                            httpVersion: nil,
