@@ -40,7 +40,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         
         var capturedError = [RemoteFeedLoader.Error]()
         sut.load {
-            // 4.1 - after execute the completion handler in load method from RemoteFeedLoader
+            // 4 - after execute the completion handler in load method from RemoteFeedLoader
             // we return the result to be saved and then validated
             capturedError.append($0)
         }
@@ -61,7 +61,7 @@ class RemoteFeedLoaderTests: XCTestCase {
             
             var capturedErrors = [RemoteFeedLoader.Error]()
             sut.load {
-                // 4.1 - after execute the completion handler in load method from RemoteFeedLoader
+                // 4 - after execute the completion handler in load method from RemoteFeedLoader
                 // we return the result to be saved and then validated
                 capturedErrors.append($0)
             }
@@ -102,7 +102,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         }
         
         func complete(withStatusCode code: Int, at index: Int = 0) {
-            // 3.1 - executing previous captured completion handler
+            // 3 - executing previous captured completion handler
             // and return it to the main caller (RemoteFeedLoader - load)
             let response = HTTPURLResponse(url: requestedURls[index],
                                            statusCode: 400,
