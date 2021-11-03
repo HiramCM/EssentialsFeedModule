@@ -101,7 +101,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
 
         expect(sut, toCompleteWithResult: .success([])) {
-            let emptyListJSON = Data(bytes: "{\"items\":[]}".utf8)
+            let emptyListJSON = makeItemsJSON([])
             client.complete(withStatusCode: 200, data: emptyListJSON)
         }
         
@@ -210,7 +210,7 @@ class RemoteFeedLoaderTests: XCTestCase {
             // 3 - executing previous captured completion handler
             // and return it to the main caller (RemoteFeedLoader - load)
             let response = HTTPURLResponse(url: requestedURls[index],
-                                           statusCode: 400,
+                                           statusCode: code,
                                            httpVersion: nil,
                                            headerFields: nil)!
             
