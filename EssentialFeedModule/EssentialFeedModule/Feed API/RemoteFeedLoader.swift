@@ -44,8 +44,14 @@ public final class RemoteFeedLoader {
             // the completion handler return to main caller (load) and get the result
             // failure or success and then executes main completion handler
             switch result {
-            case .success:
-                completion(.failure(.invalidData))
+            case let .success(data, _):
+                
+                if let _ = try? JSONSerialization.jsonObject(with: data) {
+                    completion(.success([]))
+                } else {
+                    completion(.failure(.invalidData))
+                }
+                
                 break
             case .failure:
                 completion(.failure(.connectivity))
