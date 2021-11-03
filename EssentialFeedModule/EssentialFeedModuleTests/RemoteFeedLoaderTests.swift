@@ -148,6 +148,8 @@ class RemoteFeedLoaderTests: XCTestCase {
                         whenActionOccurs action: () -> Void,
                         file: StaticString = #file, line: UInt = #line) {
         
+        // main logic to execute the tests
+        
         var capturedResults = [RemoteFeedLoader.Result]()
         sut.load { capturedResults.append($0) }
         
