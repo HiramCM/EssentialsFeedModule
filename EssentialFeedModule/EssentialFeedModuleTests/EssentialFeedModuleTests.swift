@@ -29,10 +29,5 @@ class EssentialFeedModuleTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
-    //MARK: - HELPERS
-    private func getFeedResult(file: StaticString = #file, line: UInt = #line) -> LoadFeedResult? {
-        return .error(Error.self as! Error)
-    }
 
 }
